@@ -97,26 +97,37 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script>
-        function update() {
+        function getandupdate(){
             tit = document.getElementById('title').value;
             des = document.getElementById('description').value;
             if (localStorage.getItem('sampleitem') == null) {
                 itemJsonarray = [];
                 itemJsonarray.push([tit, des]);
                 localStorage.setItem('sampleitem', JSON.stringify(itemJsonarray));
-                console.log("if");
             }
             else {
                 itemJsonarraystr = localStorage.getItem('sampleitem');
                 itemJsonarray = JSON.parse(itemJsonarraystr);
                 itemJsonarray.push([tit, des]);
                 localStorage.setItem('sampleitem', JSON.stringify(itemJsonarray));
-                console.log("else");
+            }
+            update();
+        }
+        function update() {
+            
+            if (localStorage.getItem('sampleitem') == null) {
+                itemJsonarray = [];
+                localStorage.setItem('sampleitem', JSON.stringify(itemJsonarray));
+            }
+            else {
+                itemJsonarraystr = localStorage.getItem('sampleitem');
+                itemJsonarray = JSON.parse(itemJsonarraystr);
             }
             let tablebody = document.getElementById('tablebody');
             let str = "";
             itemJsonarray.forEach((element, index) => {
-                str += `<tr>
+                str += `
+                    <tr>
                         <td scope="row">${index + 1}</td>
                         <td>${element[0]}</td>
                         <td>${element[1]}</td>
@@ -124,17 +135,17 @@
                     </tr>`;
             });
             tablebody.innerHTML = str;
-        };
+        }
         add = document.getElementById('add');
-        add.addEventListener('click', update);
+        add.addEventListener('click', getandupdate);
         update();
-       function deleted(itemindex){
-           itemJsonarraystr= localStorage.getItem('sampleitem');
-           itemJsonarray=JSON.parse(itemJsonarraystr);
-           itemJsonarray.splice(itemindex, 1);
-           localStorage.setItem('sampleitem', JSON.stringify(itemJsonarray));
-           update();
-       }
+        function deleted(itemindex) {
+            itemJsonarraystr = localStorage.getItem('sampleitem');
+            itemJsonarray = JSON.parse(itemJsonarraystr);
+            itemJsonarray.splice(itemindex, 1);
+            localStorage.setItem('sampleitem', JSON.stringify(itemJsonarray));
+            update();
+        }
 
     </script>
 </body>
