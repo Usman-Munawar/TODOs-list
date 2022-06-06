@@ -60,7 +60,8 @@
             <textarea class="form-control" id="description" rows="3"></textarea>
         </div>
 
-        <button type="submit" id="add" class="btn btn-primary">Add to list</button>
+        <button  id="add" class="btn btn-primary">Add to list</button>
+        <button  id="clear" class="btn btn-primary" onclick="clearstorage()">Clear the list</button>
         <div id="items" class="my-4">
             <h2>items list</h2>
             <table class="table">
@@ -144,6 +145,11 @@
             itemJsonarray = JSON.parse(itemJsonarraystr);
             itemJsonarray.splice(itemindex, 1);
             localStorage.setItem('sampleitem', JSON.stringify(itemJsonarray));
+            update();
+        }
+        function clearstorage(){
+            if(confirm("Do you really want to clear the list"))
+            localStorage.clear();
             update();
         }
 
